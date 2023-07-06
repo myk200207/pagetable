@@ -1,0 +1,17 @@
+Author : Young Kim
+
+This program simulates how a computer allocates and uses memory in hardware.
+The config header file contains two variables, LEVELS and POBITS.
+LEVELS indicate the number of total tables to be created and 
+you can set the value of LEVELS between 1-6
+POBITS indicate the number of bits used for the page offsets
+and you can set the value of POBITS between 4-12
+
+An example case use of this code is for educational purposes.
+It is for students who wants to explore, learn, and actually
+implement how the virtual address, page tables, and physical address
+are working together to store data, addresses, and information
+into a hardware. Furthermore, it could be used to dissect and to better
+the efficiency of virtual and physical memory. 
+
+deallocation is a tricky implementation for this case because lets say, there is a page with multiple page table entries that points to different tables, and we pick one and traverse to the lowest or the final data page and start de allocating from there and work backwards. When we get back to the first table entry, we can't free that page yet because we would have to traverse to the other tables and free those before we free level 1 page table. Also, when we are traversing to the lowest table, we get rid of the valid bits to go to the next table. Thus, when we are working backwards to deallocate memories, we have to add back the valid bits and make sure it is the same memory address that points to the next table. implementing this would be tricky. The way I would implement this is make it similiar to translate function. I would make a ptbr that points to the initial table and check for pte with valid bits. if the pte has a valid bit, i would reset to ptbr to that pte address without the valid to be the next table pointer. but before moving onto the next table, I would save that pte value (address) into a map with the what level it is. For example, I would save it into a map ( LEVEL 2 : 0x1234501). I will explain later. after traversing to the last level which is the data table. I would return to the first page and before traversing to other PTEs and tables , I would free all the addresses that are stored in the map so when it traverses it doesn't traverse the same PTEs and tables

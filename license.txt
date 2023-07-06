@@ -1,0 +1,6 @@
+GPL,MIT,and SQLITe licenses allows developers and users to freely
+and without limitation to use,share,and modify softwares without
+any payment. They make sure though that the authrs or copyright 
+holders be liable for any claim, damages or other liability.
+
+ 
